@@ -1,0 +1,14 @@
+{
+  "apps": [
+    {
+      "id": "oldvk",
+      "name": "Old VK",
+      "version": "3.5.1",
+      "description": "Старая версия ВКонтакте",
+      "icon": "app/oldvk/icon.png",
+      "screenshots": [],
+      "apk": "app/oldvk/app.apk",
+      "size": 0
+    }
+  ]
+}
