@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sota Store</title>
+<style>
+  body { font-family: sans-serif; background: #121212; color: #eee; margin: 0; padding: 16px; }
+  h1 { text-align: center; font-size: 22px; color: #4fc3f7; margin-bottom: 16px; }
+  .app { background: #1e1e1e; border-radius: 12px; padding: 14px; margin-bottom: 12px; display: flex; align-items: center; }
+  .app img { width: 56px; height: 56px; border-radius: 12px; margin-right: 14px; background: #333; }
+  .app-info { flex: 1; }
+  .app-name { font-size: 16px; font-weight: bold; margin-bottom: 4px; }
+  .app-desc { font-size: 13px; color: #aaa; margin-bottom: 8px; }
+  .app a { display: inline-block; background: #4fc3f7; color: #000; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 13px; }
+  #status { text-align: center; color: #888; margin-top: 20px; }
+</style>
+</head>
+<body>
+<h1>Sota Store</h1>
+<div id="list"></div>
+<div id="status">Загрузка...</div>
+<script>
+fetch('https://raw.githubusercontent.com/Giga50/Sotastore/main/app/index.json')
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    var list = document.getElementById('list');
+    var status = document.getElementById('status');
+    if (!data.apps || data.apps.length === 0) { status.textContent = 'Пусто'; return; }
+    status.textContent = 'Приложений: ' + data.apps.length;
+    var base = 'https://raw.githubusercontent.com/Giga50/Sotastore/main/';
+    data.apps.forEach(function(app) {
+      var div = document.createElement('div');
+      div.className = 'app';
+      div.innerHTML = '<img src="' + base + app.icon + '" onerror="this.style.display=\'none\'">' +
+        '<div class="app-info"><div class="app-name">' + app.name + '</div>' +
+        '<div class="app-desc">' + app.description + '</div>' +
+        '<a href="' + base + app.apk + '">Скачать APK</a></div>';
+      list.appendChild(div);
+    });
+  })
+  .catch(function(e) { document.getElementById('status').textContent = 'Ошибка: ' + e.message; });
+</script>
+</body>
+</html>
